@@ -1,0 +1,39 @@
+@model IEnumerable<TP2.Models.Product>
+
+@{
+    ViewData["Title"] = "Liste des produits";
+}
+
+<div class="card-group">
+    @foreach (var product in Model)
+    {
+        var photoPath = "~/images/" + (product.Image ?? "noimage.jpg");
+        var categoryClass = product.Category?.CategoryName switch
+        {
+            "Alimentaire" => "card-alimentaire",
+            "Hygiène" => "card-hygiene",
+            "Nettoyage" => "card-nettoyage",
+            _ => ""
+        };
+
+        <div class="card m-3 product-card @categoryClass" style="min-width: 18rem; max-width:30.5%;">
+            <div class="card-header">
+                <h5><b>Nom : </b> @product.Name</h5>
+                <h5><b>Prix : </b>@product.Price</h5>
+                <h5><b>Quantité : </b> @product.QteStock</h5>
+                <h5><b>Catégorie : @product.Category.CategoryName </b></h5>
+            </div>
+
+            <img class="card-img-top imageThumbnail" src="@photoPath" asp-append-version="true" />
+
+            <div class="card-footer text-center">
+                <a asp-controller="Product" asp-action="Details" asp-route-id="@product.ProductId"
+                   class="btn btn-success m-1 rounded-pill">View</a>
+                <a asp-action="Edit" asp-controller="Product"
+                   class="btn btn-info text-white m-1 rounded-pill" asp-route-id="@product.ProductId">Edit</a>
+                <a asp-action="Delete" asp-controller="Product"
+                   class="btn btn-danger m-1 rounded-pill" asp-route-id="@product.ProductId">Delete</a>
+            </div>
+        </div>
+    }
+</div>
