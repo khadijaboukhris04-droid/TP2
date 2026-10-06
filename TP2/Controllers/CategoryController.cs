@@ -1,9 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TP2.Models;
 using TP2.Models.Repositories;
 
+
+
 namespace TP2.Controllers
 {
+    [Authorize(Roles = "Admin,Manager")]
+
     public class CategoryController : Controller
     {
         readonly ICategorieRepository CategRepository;
@@ -12,6 +17,7 @@ namespace TP2.Controllers
         {
             CategRepository = categRepository;
         }
+        [AllowAnonymous]
 
         public ActionResult Index()
         {
