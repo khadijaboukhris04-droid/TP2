@@ -21,6 +21,10 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <!-- Bouton menu catégories -->
+                    <button class="btn btn-outline-light me-2" type="button" id="toggleMenuBtn">
+                        <img src="~/images/categorie.png" alt="Ouvrir la liste des catégories" id="toggleMenu" style="width:24px;height:24px;" />
+                    </button>
 
                     <!-- Menu gauche -->
                     <ul class="navbar-nav flex-grow-1">
@@ -88,10 +92,25 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Menu latéral pour les catégories -->
+            <div class="col-md-2" id="sidebar" style="display: none;">
+                <p>&nbsp;</p>
+                <ul class="list-group">
+                    @await Html.PartialAsync("_CategoriesMenu", ViewData["Categories"])
+                </ul>
+            </div>
+
+            <!-- Contenu principal -->
+            <div class="col-md-12" id="mainContent">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+
+        </div>
     </div>
 
     <footer class="border-top footer text-muted">
