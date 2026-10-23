@@ -17,20 +17,29 @@ namespace TP2.Controllers
         {
             CategRepository = categRepository;
         }
-        [AllowAnonymous]
 
+        [AllowAnonymous]
         public ActionResult Index()
         {
-            return View(CategRepository.GetAll());
+            var categories = CategRepository.GetAll();
+            ViewData["Categories"] = categories;
+
+            return View(categories);
         }
 
         public ActionResult Details(int id)
         {
+            var categories = CategRepository.GetAll();
+            ViewData["Categories"] = categories;
+
             return View(CategRepository.GetById(id));
         }
 
         public ActionResult Create()
         {
+            var categories = CategRepository.GetAll();
+            ViewData["Categories"] = categories;
+
             return View();
         }
 
@@ -48,6 +57,9 @@ namespace TP2.Controllers
 
         public ActionResult Edit(int id)
         {
+            var categories = CategRepository.GetAll();
+            ViewData["Categories"] = categories;
+
             return View(CategRepository.GetById(id));
         }
 
@@ -65,6 +77,9 @@ namespace TP2.Controllers
 
         public ActionResult Delete(int id)
         {
+            var categories = CategRepository.GetAll();
+            ViewData["Categories"] = categories;
+
             return View(CategRepository.GetById(id));
         }
 

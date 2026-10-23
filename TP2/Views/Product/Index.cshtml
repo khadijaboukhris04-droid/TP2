@@ -35,5 +35,16 @@
                    class="btn btn-danger m-1 rounded-pill" asp-route-id="@product.ProductId">Delete</a>
             </div>
         </div>
+      
+    }
+</div>
+  <!-- Pagination -->
+<div class="pagination">
+    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+    {
+        <a asp-action="Index" asp-route-categoryId="@ViewBag.CategoryId"
+           asp-route-page="@i" class="btn btn-secondary m-1">
+            @i
+        </a>
     }
 </div>

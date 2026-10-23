@@ -26,7 +26,6 @@ namespace TP2.Controllers
         }
 
 
-        // GET: Product
         // GET: ProductController
         [AllowAnonymous]
         public IActionResult Index(int? categoryId, int page = 1)
@@ -60,6 +59,9 @@ namespace TP2.Controllers
         // GET: Product/Details/5
         public ActionResult Details(int id)
         {
+            var categories = CategRepository.GetAll();
+            ViewData["Categories"] = categories;
+
             var product = ProductRepository.GetById(id);
             if (product == null) return NotFound();
             return View(product);
@@ -68,6 +70,9 @@ namespace TP2.Controllers
         // GET: Product/Create
         public ActionResult Create()
         {
+            var categories = CategRepository.GetAll();
+            ViewData["Categories"] = categories;
+
             ViewBag.CategoryId = new SelectList(CategRepository.GetAll(), "CategoryId", "CategoryName");
             return View();
         }
@@ -115,6 +120,9 @@ namespace TP2.Controllers
         // GET: Product/Edit/5
         public ActionResult Edit(int id)
         {
+            var categories = CategRepository.GetAll();
+            ViewData["Categories"] = categories;
+
             ViewBag.CategoryId = new SelectList(CategRepository.GetAll(), "CategoryId", "CategoryName");
             Product product = ProductRepository.GetById(id);
             if (product == null) return NotFound();
@@ -188,6 +196,9 @@ namespace TP2.Controllers
         // GET: Product/Delete/5
         public ActionResult Delete(int id)
         {
+            var categories = CategRepository.GetAll();
+            ViewData["Categories"] = categories;
+
             var product = ProductRepository.GetById(id);
             if (product == null) return NotFound();
             return View(product);
@@ -203,9 +214,19 @@ namespace TP2.Controllers
         }
 
         // Recherche
+        [AllowAnonymous]
         public ActionResult Search(string val)
         {
+            var categories = CategRepository.GetAll();
+            ViewData["Categories"] = categories;
+
             var result = ProductRepository.FindByName(val ?? "");
+
+            // La vue Index utilise ces valeurs pour la pagination
+            ViewBag.TotalPages = 1;
+            ViewBag.CurrentPage = 1;
+            ViewBag.CategoryId = null;
+
             return View("Index", result);
         }
     }
