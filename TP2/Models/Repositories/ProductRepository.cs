@@ -1,10 +1,15 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace TP2.Models.Repositories
 {
     public class ProductRepository : IProductRepository
     {
         readonly AppDbContext context;
+        public IQueryable<Product> GetAllProducts()
+        {
+            return context.Products.Include(p => p.Category);
+        }
 
         public ProductRepository(AppDbContext context)
         {

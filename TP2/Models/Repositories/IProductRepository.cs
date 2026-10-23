@@ -1,7 +1,9 @@
 ﻿namespace TP2.Models.Repositories
 {
     public interface IProductRepository
+
     {
+        IQueryable<Product> GetAllProducts();
         Product GetById(int Id);
         IList<Product> GetAll();
         void Add(Product t);
