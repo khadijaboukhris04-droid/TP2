@@ -27,11 +27,34 @@ namespace TP2.Controllers
 
 
         // GET: Product
+        // GET: ProductController
         [AllowAnonymous]
-        public ActionResult Index()
+        public IActionResult Index(int? categoryId, int page = 1)
         {
-            var Products = ProductRepository.GetAll();
-            return View(Products);
+            int pageSize = 4; // Nombre de produits par page
+
+            var categories = CategRepository.GetAll();
+            ViewData["Categories"] = categories;
+
+            IQueryable<Product> productsQuery = ProductRepository.GetAllProducts();
+
+            if (categoryId.HasValue)
+            {
+                productsQuery = productsQuery.Where(p => p.CategoryId == categoryId);
+            }
+
+            // Pagination
+            var totalProducts = productsQuery.Count();
+            var products = productsQuery
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
+            ViewBag.CurrentPage = page;
+            ViewBag.CategoryId = categoryId;
+
+            return View(products);
         }
 
         // GET: Product/Details/5
