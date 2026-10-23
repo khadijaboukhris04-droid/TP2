@@ -27,14 +27,13 @@ namespace TP2.Controllers
 
         public ActionResult AddProduct(int id)
         {
-            ViewData["Categories"] = categRepository.GetAll();
             Product pp = productRepository.GetById(id);
-            ListeCart.Instance.AddItem(pp);
-            ViewBag.Liste = ListeCart.Instance.Items;
-            ViewBag.total = ListeCart.Instance.GetSubTotal();
-            return View();
+            if (pp != null)
+            {
+                ListeCart.Instance.AddItem(pp);
+            }
+            return RedirectToAction("Index");
         }
-
         [HttpPost]
         public ActionResult PlusProduct(int id)
         {
